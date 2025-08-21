@@ -4,7 +4,7 @@ Erstellt eine XML Datei zum Einzug von Vereinsmitgliedsbeiträgen auf Grundlage 
 
 Das Fälligkeitsdatum der Lastschrift wird auf den ersten Tag des nächsten Monats
 gesetzt. Oder auf das Datum in 10 Tagen, wenn weniger als 10 Tage im aktuellen
-Monat verbleiben.
+Monat verbleiben (Anzahl der Tage ist konfigurierbar). 
 
 ## Installation
 
@@ -23,7 +23,17 @@ pip install -r requirements.txt
 ## Konfiguration
 
 Kopiere `config.toml.example` und nenne die Datei `config.toml`. Passe die Werte 
-darin für deinen Verein passend an.
+darin für deinen Verein entsprechend an.
+
+### Beispiel
+
+```
+verein_name = "Name des Vereins"
+verein_iban = "IBAN des Vereins"
+verein_bic = "BIC des Vereins"
+verein_creditor_id = "Gläubiger ID des Vereins"
+sepa_description = "Verwendungszweck"
+```
 
 ## Eingabetabelle
 
