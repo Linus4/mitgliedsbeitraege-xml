@@ -1,5 +1,10 @@
 # mitgliedsbeitraege-xml
+
 Erstellt eine XML Datei zum Einzug von Vereinsmitgliedsbeiträgen auf Grundlage einer Mitgliederliste.
+
+Das Fälligkeitsdatum der Lastschrift wird auf den ersten Tag des nächsten Monats
+gesetzt. Oder auf das Datum in 10 Tagen, wenn weniger als 10 Tage im aktuellen
+Monat verbleiben.
 
 ## Installation
 
