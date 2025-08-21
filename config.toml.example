@@ -1,0 +1,5 @@
+verein_name = "Name des Vereins"
+verein_iban = "IBAN des Vereins"
+verein_bic = "BLZ des Vereins"
+verein_creditor_id = "Gläubiger ID des Vereins"
+sepa_description = "Verwendungszweck"
