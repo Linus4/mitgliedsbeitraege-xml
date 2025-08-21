@@ -20,7 +20,7 @@ def validateMember(member):
 def determineCollectionDate(minDelta: int) -> datetime.date:
     collectionDate = (datetime.date.today().replace(day=1) + datetime.timedelta(days=32)).replace(day=1) # first of next month
     if collectionDate - datetime.date.today() < datetime.timedelta(days=minDelta):
-        collectionDate = datetime.date.today() + datetime.timedelte(days=minDelta)
+        collectionDate = datetime.date.today() + datetime.timedelta(days=minDelta)
         
     return collectionDate
 
@@ -39,14 +39,15 @@ if __name__ == '__main__':
     todayStr = datetime.date.today().strftime('%Y-%m-%d')
 
     parser = argparse.ArgumentParser(
-        prog='Mitgliedsbeiträge XML',
-        description='Erstellt eine XML Datei zum Einzug von Mitgliedsbeiträgen aus einer Tabelle der Vereinsmitglieder.',)
+        prog='mitgliedsbeitraege-xml.py',
+        description='Erstellt eine XML Datei zum Einzug von Mitgliedsbeiträgen für den kommenden Monat aus einer Tabelle der Vereinsmitglieder.',)
 
     parser.add_argument('filename', default="mitgliedertabelle.ods", help="Mitgliedertabelle als .ods oder .xlsx")
     parser.add_argument('-c', '--configfile', default="config.toml", help="Konfigurationsdatei im TOML Format. (default: config.toml)")
     parser.add_argument('-o', '--output', default=f"sammelauftrag-{todayStr}.xml", help="Ausgabe XML Datei für Sammelauftrag. (default: sammelauftrag-{aktuelles-datum}.xml)")
     parser.add_argument('-p', '--print', action=argparse.BooleanOptionalAction, help="Flag gibt an dass das XML auch auf dem Terminal ausgegeben werden soll.")
     parser.add_argument('-d', '--delta', default=10, type=int, help="Tage die mindestens zwischen jetzt und dem Fälligkeitsdatum der Lastschrift liegen sollen. (default: 10)")
+    parser.add_argument('-f', '--fdate', type=datetime.date.fromisoformat, help="Fälligkeitsdatum, an dem die Lastschrift eingezogen wird. Im ISO Format (z.B. 2025-09-02). Überschreibt --delta.")
 
     args = parser.parse_args()
 
@@ -86,7 +87,10 @@ if __name__ == '__main__':
 
     print(f"Aktive Mitglieder: {len(members)}")
 
-    collectionDate = determineCollectionDate()
+    if args.fdate:
+        collectionDate = args.fdate
+    else:
+        collectionDate = determineCollectionDate(args.delta)
 
     for i, m in members.iterrows():
 

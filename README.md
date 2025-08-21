@@ -1,14 +1,11 @@
 # mitgliedsbeitraege-xml
 
-Erstellt eine XML Datei zum Einzug von Vereinsmitgliedsbeiträgen auf Grundlage einer Mitgliederliste.
-
-Das Fälligkeitsdatum der Lastschrift wird auf den ersten Tag des nächsten Monats
-gesetzt. Oder auf das Datum in 10 Tagen, wenn weniger als 10 Tage im aktuellen
-Monat verbleiben (Anzahl der Tage ist konfigurierbar). 
+Erstellt eine XML Datei zum Einzug von Vereinsmitgliedsbeiträgen für den kommenden
+Monat auf Grundlage einer Mitgliederliste.
 
 ## Installation
 
-Zunächst müssen Git und Python installiert werden - mindestens Version 3.11. 
+Zunächst müssen Git und Python (mindestens Version 3.11) installiert werden. 
 
 Dann:
 
@@ -70,9 +67,11 @@ aktiviert werden. Vor dem Prompt sollte in Klammern der Name der Umgebung
 erscheinen.
 
 ```
-usage: Mitgliedsbeiträge XML [-h] [-c CONFIGFILE] [-o OUTPUT] [-p | --print | --no-print] [-d DELTA] filename
+usage: mitgliedsbeitraege-xml.py [-h] [-c CONFIGFILE] [-o OUTPUT] [-p | --print | --no-print] [-d DELTA] [-f FDATE]
+                                 filename
 
-Erstellt eine XML Datei zum Einzug von Mitgliedsbeiträgen aus einer Tabelle der Vereinsmitglieder.
+Erstellt eine XML Datei zum Einzug von Mitgliedsbeiträgen für den kommenden Monat aus einer Tabelle der
+Vereinsmitglieder.
 
 positional arguments:
   filename              Mitgliedertabelle als .ods oder .xlsx
@@ -88,6 +87,9 @@ options:
   -d DELTA, --delta DELTA
                         Tage die mindestens zwischen jetzt und dem Fälligkeitsdatum der Lastschrift liegen sollen.
                         (default: 10)
+  -f FDATE, --fdate FDATE
+                        Fälligkeitsdatum, an dem die Lastschrift eingezogen wird. Im ISO Format (z.B. 2025-09-02).
+                        Überschreibt --delta.
 ```
 
 ### Beispiel
