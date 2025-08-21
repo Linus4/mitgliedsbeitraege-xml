@@ -3,12 +3,14 @@ Erstellt eine XML Datei zum Einzug von Vereinsmitgliedsbeiträgen auf Grundlage 
 
 ## Installation
 
-Zunächst muss Python installiert werden - mindestens Version 3.11.
+Zunächst müssen Git und Python installiert werden - mindestens Version 3.11. 
+
+Dann:
 
 ```
 git clone https://github.com/Linus4/mitgliedsbeitraege-xml.git
 cd mitgliedsbeitraege-xml
-python3 -m venv venv # oder python
+python -m venv venv # oder python3
 source venv/bin/activate
 pip install -r requirements.txt
 ```
@@ -38,6 +40,13 @@ nachlesen.
 
 Eine Spalte `Beitrag` muss existieren und einen monatlichen Beitrag in **Cent** 
 (ganze Zahl) enthalten.
+
+### Beispiel
+
+| Nachname | Vorname | Aktiv | Datum SEPA Mandat | IBAN | BIC | Kontoinhaber | Beitrag | Mandatsreferenz | [weitere Spalten] |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | 
+| Silie | Petra | x | 2020-05-28 | DE02120300000000202051 | BYLADEM1001 | Petra Silie | 500 | MX00001-00001 | ... |
+| Racho | Volker |  | 2020-05-28 | DE02600501010002034304 | SOLADEST600 | Volker Racho | 1000 | MX00002-00001 | ... |
 
 ## Ausführen
 

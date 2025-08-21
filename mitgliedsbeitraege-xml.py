@@ -91,12 +91,12 @@ if __name__ == '__main__':
 
         payment = {
             "name": m["Kontoinhaber"],
-            "IBAN": m["IBAN"],
-            "BIC": m["BIC"],
+            "IBAN": m["IBAN"].strip(),
+            "BIC": m["BIC"].strip(),
             "amount": m["Beitrag"], # in cents
             "type": "RCUR", # FRST, RCUR, OOFF, FNAL, TODO notwendig?
             "collection_date": collectionDate,
-            "mandate_id": m["Mandatsreferenz"],
+            "mandate_id": m["Mandatsreferenz"].strip(),
             "mandate_date": m["Datum SEPA Mandat"],
             "description": f"{config_data['sepa_description']} {MONTHS[collectionDate.month-1]} {collectionDate.year}",
         }
