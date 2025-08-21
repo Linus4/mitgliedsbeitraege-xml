@@ -44,7 +44,7 @@ Eine Spalte `Beitrag` muss existieren und einen monatlichen Beitrag in **Cent**
 ### Beispiel
 
 | Nachname | Vorname | Aktiv | Datum SEPA Mandat | IBAN | BIC | Kontoinhaber | Beitrag | Mandatsreferenz | [weitere Spalten] |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | 
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | Silie | Petra | x | 2020-05-28 | DE02120300000000202051 | BYLADEM1001 | Petra Silie | 500 | MX00001-00001 | ... |
 | Racho | Volker |  | 2020-05-28 | DE02600501010002034304 | SOLADEST600 | Volker Racho | 1000 | MX00002-00001 | ... |
 
