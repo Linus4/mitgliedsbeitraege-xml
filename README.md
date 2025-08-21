@@ -60,7 +60,7 @@ aktiviert werden. Vor dem Prompt sollte in Klammern der Name der Umgebung
 erscheinen.
 
 ```
-usage: Mitgliedsbeiträge XML [-h] [-c CONFIGFILE] [-o OUTPUT] [-p | --print | --no-print] filename
+usage: Mitgliedsbeiträge XML [-h] [-c CONFIGFILE] [-o OUTPUT] [-p | --print | --no-print] [-d DELTA] filename
 
 Erstellt eine XML Datei zum Einzug von Mitgliedsbeiträgen aus einer Tabelle der Vereinsmitglieder.
 
@@ -70,11 +70,14 @@ positional arguments:
 options:
   -h, --help            show this help message and exit
   -c CONFIGFILE, --configfile CONFIGFILE
-                        Konfigurationsdatei im TOML Format
+                        Konfigurationsdatei im TOML Format. (default: config.toml)
   -o OUTPUT, --output OUTPUT
-                        Ausgabe XML Datei für Sammelauftrag
+                        Ausgabe XML Datei für Sammelauftrag. (default: sammelauftrag-{aktuelles-datum}.xml)
   -p, --print, --no-print
                         Flag gibt an dass das XML auch auf dem Terminal ausgegeben werden soll.
+  -d DELTA, --delta DELTA
+                        Tage die mindestens zwischen jetzt und dem Fälligkeitsdatum der Lastschrift liegen sollen.
+                        (default: 10)
 ```
 
 ### Beispiel

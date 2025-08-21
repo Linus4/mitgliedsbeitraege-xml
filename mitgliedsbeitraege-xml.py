@@ -15,25 +15,23 @@ def validateMember(member):
                         "Beitrag", "Mandatsreferenz"]
     for c in requiredColumns:
         if pd.isnull(member[c]):
-            print(f"CRITICAL: {c} ist leer bei {member['Vorname']} {member['Nachname']}!")
-            sys.exit(1)
+            raise ValueError(f"CRITICAL: {c} ist leer bei {member['Vorname']} {member['Nachname']}!")
 
-def determineCollectionDate():
+def determineCollectionDate(minDelta: int) -> datetime.date:
     collectionDate = (datetime.date.today().replace(day=1) + datetime.timedelta(days=32)).replace(day=1) # first of next month
-    if collectionDate - datetime.date.today() < datetime.timedelta(days=10):
-        collectionDate = datetime.date.today() + datetime.timedelte(days=10)
+    if collectionDate - datetime.date.today() < datetime.timedelta(days=minDelta):
+        collectionDate = datetime.date.today() + datetime.timedelte(days=minDelta)
         
     return collectionDate
 
 def validateInput(members):
     requiredColumns = set(["Nachname", "Vorname", "Aktiv", "Datum SEPA Mandat", 
                             "IBAN", "BIC", "Kontoinhaber", "Beitrag", "Mandatsreferenz"])
-    if not requiredColumns.issubset(members.columns):
-        print(f"CRITICAL: Der Mitgliedertabelle fehlen die Spalten {requiredColumns-set(members.columns)}!")
-        sys.exit(1)
+    missingColumns = requiredColumns - set(members.columns)
+    if missingColumns:
+        raise ValueError(f"CRITICAL: Der Mitgliedertabelle fehlen die Spalten {missingColumns}!")
     if not members.dtypes["Beitrag"] == "int64":
-        print(f"CRITICAL: Die Spalte 'Beitrag' muss ganze Zahlen enthalten (Centbeträge).")
-        sys.exit(1)
+        raise TypeError(f"CRITICAL: Die Spalte 'Beitrag' muss ganze Zahlen enthalten (Centbeträge).")
 
 
 if __name__ == '__main__':
@@ -45,9 +43,10 @@ if __name__ == '__main__':
         description='Erstellt eine XML Datei zum Einzug von Mitgliedsbeiträgen aus einer Tabelle der Vereinsmitglieder.',)
 
     parser.add_argument('filename', default="mitgliedertabelle.ods", help="Mitgliedertabelle als .ods oder .xlsx")
-    parser.add_argument('-c', '--configfile', default="config.toml", help="Konfigurationsdatei im TOML Format")
-    parser.add_argument('-o', '--output', default=f"sammelauftrag-{todayStr}.xml", help="Ausgabe XML Datei für Sammelauftrag")
+    parser.add_argument('-c', '--configfile', default="config.toml", help="Konfigurationsdatei im TOML Format. (default: config.toml)")
+    parser.add_argument('-o', '--output', default=f"sammelauftrag-{todayStr}.xml", help="Ausgabe XML Datei für Sammelauftrag. (default: sammelauftrag-{aktuelles-datum}.xml)")
     parser.add_argument('-p', '--print', action=argparse.BooleanOptionalAction, help="Flag gibt an dass das XML auch auf dem Terminal ausgegeben werden soll.")
+    parser.add_argument('-d', '--delta', default=10, type=int, help="Tage die mindestens zwischen jetzt und dem Fälligkeitsdatum der Lastschrift liegen sollen. (default: 10)")
 
     args = parser.parse_args()
 
@@ -75,8 +74,12 @@ if __name__ == '__main__':
 
     sepa = SepaDD(config, schema="pain.008.001.02", clean=True)
 
-    members = pd.read_excel(args.filename, sheet_name="Mitglieder")
-    validateInput(members)
+    try:
+        members = pd.read_excel(args.filename, sheet_name="Mitglieder")
+        validateInput(members)
+    except (ValueError, TypeError) as e:
+        print(e)
+        sys.exit(1)
 
     members = members[~members["Aktiv"].isnull()]
     members["Datum SEPA Mandat"] = members["Datum SEPA Mandat"].dt.date
@@ -87,7 +90,11 @@ if __name__ == '__main__':
 
     for i, m in members.iterrows():
 
-        validateMember(m)
+        try:
+            validateMember(m)
+        except ValueError as e:
+            print(e)
+            sys.exit(1)
 
         payment = {
             "name": m["Kontoinhaber"],
