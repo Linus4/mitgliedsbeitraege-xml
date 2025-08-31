@@ -1,7 +1,11 @@
 # mitgliedsbeitraege-xml
 
-Erstellt eine XML Datei zum Einzug von Vereinsmitgliedsbeiträgen für den kommenden
-Monat auf Grundlage einer Mitgliederliste.
+Erstellt eine XML Datei zum Einzug von Mitgliedsbeiträgen für den kommenden 
+Monat aus einer Tabelle der Vereinsmitglieder.
+
+> Ich benutze das (noch) nicht wirklich im Verein, sondern habe es eher
+> geschrieben, um zu sehen, ob das umsetzbar ist und welche Probleme dabei
+> auftreten.
 
 ## Installation
 
