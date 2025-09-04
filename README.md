@@ -26,6 +26,9 @@ pip install -r requirements.txt
 Kopiere `config.toml.example` und nenne die Datei `config.toml`. Passe die Werte 
 darin für deinen Verein entsprechend an.
 
+An den Verwendungszweck wird automatisch der Monat und das Jahr des Fälligkeitsdatums
+angehängt.
+
 ### Beispiel
 
 ```
